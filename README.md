@@ -26,7 +26,7 @@ iPadOS 18.5. Consequently, iOS 17.0–17.3.1 remains affected at the OS level.
 | iOS | 17.0–17.3.1 |
 | Jailbreak | Relaxin |
 | Bootstrap/package architecture | rootHide / `iphoneos-arm64e` |
-| Device architecture | arm64e; tweak binary contains arm64 and arm64e slices |
+| Device architecture | arm64e; tweak binary contains an arm64e slice only |
 | Package | Install the rootHide `.deb`, not a conventional rootless build |
 
 Relaxin uses the rootHide bootstrap/package architecture, so AppEnumGuard is
@@ -118,7 +118,7 @@ is specifically intended to run from a normal application sandbox.
 
 - [Apple iOS 18.5 security content](https://support.apple.com/en-us/122404)
 - [NVD: CVE-2025-31207](https://nvd.nist.gov/vuln/detail/CVE-2025-31207)
-- [Published TrollDetector proof of concept](https://gist.github.com/wh1te4ever/c7909dcb5b66c13a217b49ea3e320caf)
+- [Original public SpringBoardServices proof of concept](https://gist.github.com/wh1te4ever/c7909dcb5b66c13a217b49ea3e320caf)
 - [rootHide developer documentation](https://github.com/roothide/Developer)
 
 ## License

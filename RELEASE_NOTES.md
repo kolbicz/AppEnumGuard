@@ -14,6 +14,7 @@ iOS/iPadOS 18.5.
 - iOS 17.0–17.3.1
 - Relaxin jailbreak
 - rootHide bootstrap and package architecture
+- arm64e devices; the tweak dylib is arm64e-only
 - Install the `iphoneos-arm64e` rootHide package; do not use a rootless build
 
 ## Included assets
@@ -24,7 +25,7 @@ iOS/iPadOS 18.5.
 ## SHA-256
 
 ```text
-e7818c86fd717015554057a4305619bf1be947c7fdfa758ebb0716ee273320de  AppEnumGuard_1.0.0_roothide_iphoneos-arm64e.deb
+d4637d96fca670cca345130dd4603192d350023b22a9f4c70e59a8b9765e9af5  AppEnumGuard_1.0.0_roothide_iphoneos-arm64e.deb
 a5f6143c1ca85a07d4f7722b6e38e29041623076d593a9f294160acf1daccf42  AppEnumGuardTester_1.0.0_sandboxed.ipa
 ```
 

@@ -2,7 +2,8 @@
 
 Compatibility: Relaxin jailbreak on iOS 17.0–17.3.1 using its rootHide
 bootstrap. Install the rootHide `iphoneos-arm64e` package, not a conventional
-rootless package.
+rootless package. The tweak binary is arm64e-only, matching Relaxin's current
+device support.
 
 The tweak hooks the two SpringBoardServices launch entry points used by the
 published primitive and returns a uniform application-not-found result to
