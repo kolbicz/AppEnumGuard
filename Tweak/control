@@ -1,9 +1,9 @@
 Package: com.christoph.appenumerationfix
-Name: CVE-2025-31207 Fix
+Name: AppEnumGuard
 Version: 1.0.0
 Architecture: iphoneos-arm64
-Description: Mitigates the FrontBoard installed-app enumeration side channel on vulnerable iOS versions.
+Description: Mitigates CVE-2025-31207 installed-app enumeration on iOS 17.0-17.3.1 with Relaxin/rootHide.
 Maintainer: Christoph
 Author: Christoph
 Section: Tweaks
-Depends: firmware (>= 17.0), firmware (<< 18.5)
+Depends: firmware (>= 17.0), firmware (<< 17.4)

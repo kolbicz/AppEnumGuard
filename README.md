@@ -1,13 +1,42 @@
 # AppEnumGuard
 
 AppEnumGuard is a defensive rootHide tweak for the installed-application
-enumeration side channel tracked as CVE-2025-31207. The repository also contains
-a normal sandboxed iOS test application that demonstrates the vulnerable result
-and verifies the mitigation.
+enumeration side channel tracked as **CVE-2025-31207**. It is designed for the
+**Relaxin jailbreak on iOS 17.0–17.3.1**, using Relaxin's rootHide architecture.
+The repository also contains a normal sandboxed iOS test application that
+demonstrates the vulnerable result and verifies the mitigation.
 
-Apple describes the FrontBoard issue as allowing an app to enumerate installed
-applications and fixed it in iOS/iPadOS 18.5. AppEnumGuard is intended for
-vulnerable iOS 17 and iOS 18.0–18.4.1 devices that cannot install Apple's fix.
+## CVE-2025-31207
+
+CVE-2025-31207 is an information-disclosure vulnerability in Apple's FrontBoard
+application-launching logic. A sandboxed application can submit arbitrary bundle
+identifiers through a private SpringBoardServices launch function and distinguish
+installed applications from missing applications using different return codes.
+This can reveal private information about the applications a user has installed,
+including banking, messaging, security, sideloading, and jailbreak-related apps.
+
+Apple describes the issue as a logic problem that could let an application
+enumerate installed apps. Apple corrected it with improved checks in iOS and
+iPadOS 18.5. Consequently, iOS 17.0–17.3.1 remains affected at the OS level.
+
+## Compatibility
+
+| Component | Supported target |
+|---|---|
+| iOS | 17.0–17.3.1 |
+| Jailbreak | Relaxin |
+| Bootstrap/package architecture | rootHide / `iphoneos-arm64e` |
+| Device architecture | arm64e; tweak binary contains arm64 and arm64e slices |
+| Package | Install the rootHide `.deb`, not a conventional rootless build |
+
+Relaxin uses the rootHide bootstrap/package architecture, so AppEnumGuard is
+built with rootHide Theos and contains rootHide `.jbroot` loader paths. The
+package declares `firmware (>= 17.0)` and `firmware (<< 17.4)`, matching the
+supported Relaxin range of 17.0–17.3.1.
+
+The tweak and tester were verified together on a real Relaxin/rootHide device:
+the tester detected the leak with the tweak removed and returned a green pass
+after the tweak was installed.
 
 ## How it works
 
