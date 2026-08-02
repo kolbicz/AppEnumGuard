@@ -1,0 +1,9 @@
+Package: com.christoph.appenumerationfix
+Name: CVE-2025-31207 Fix
+Version: 1.0.0
+Architecture: iphoneos-arm64
+Description: Mitigates the FrontBoard installed-app enumeration side channel on vulnerable iOS versions.
+Maintainer: Christoph
+Author: Christoph
+Section: Tweaks
+Depends: firmware (>= 17.0), firmware (<< 18.5)
