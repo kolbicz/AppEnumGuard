@@ -5,7 +5,7 @@ THEOS_PACKAGE_SCHEME ?= roothide
 include $(THEOS)/makefiles/common.mk
 
 TWEAK_NAME := AppEnumerationFix
-AppEnumerationFix_FILES := Tweak.xm
+AppEnumerationFix_FILES := Tweak.mm
 AppEnumerationFix_CFLAGS := -fobjc-arc
 AppEnumerationFix_FRAMEWORKS := Foundation
 

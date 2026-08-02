@@ -29,7 +29,7 @@ CLANG_MODULE_CACHE_PATH="$module_cache" xcrun --sdk iphoneos clang \
 cp "$repo_dir/Tester/Resources/Info.plist" "$app_dir/Info.plist"
 codesign --force --sign - --timestamp=none "$app_dir"
 
-ipa="$output_dir/AppEnumGuardTester_1.0.0_sandboxed.ipa"
+ipa="$output_dir/AppEnumGuardTester_1.1.0_sandboxed.ipa"
 rm -f "$ipa"
 (cd "$build_dir" && /usr/bin/zip -qry "$ipa" Payload)
 

@@ -34,9 +34,10 @@ built with rootHide Theos and contains rootHide `.jbroot` loader paths. The
 package declares `firmware (>= 17.0)` and `firmware (<< 17.4)`, matching the
 supported Relaxin range of 17.0–17.3.1.
 
-The tweak and tester were verified together on a real Relaxin/rootHide device:
-the tester detected the leak with the tweak removed and returned a green pass
-after the tweak was installed.
+The SpringBoard-side v1.1 tweak and sandboxed tester were verified together on
+iOS 17.3.1 build 21D61 with injection disabled for the tester. The tester
+detected the leak with the tweak removed and returned a green pass after the
+tweak was installed.
 
 ## How it works
 
@@ -48,23 +49,37 @@ application:
 - `9`: target exists, but launch is denied by policy
 - `7`: target does not exist
 
-The tweak is injected into UIKit application processes. For an ordinary
-container-installed application, it returns `7` without submitting the private
-launch request. Apple and other system processes outside the application
-container retain the original behavior.
+AppEnumGuard 1.1 injects only into SpringBoard and hooks the common
+`FBSystemService` trust-validation method. When an unauthorized launch request
+would return `FBSOpenApplicationErrorDomain` security-policy error 3, the tweak
+changes it to application-not-found error 4. The outer SpringBoardServices API
+then returns `7` for both installed and missing targets.
+
+The private method's argument count and Objective-C type encoding are validated
+before the hook is installed. If Apple changes the ABI, AppEnumGuard fails open
+instead of hooking an unknown SpringBoard method.
+
+### Change from 1.0
+
+Version 1.0 hooked SpringBoardServices inside every UIKit application. It worked,
+but required injection into every app being protected; an app that disabled or
+detected injection could bypass the mitigation. Version 1.1 moves enforcement to
+SpringBoard, so a single central hook protects callers without injecting
+AppEnumGuard into their processes.
 
 ## Release downloads
 
 Each GitHub release contains both installable artifacts:
 
-- `AppEnumGuard_1.0.0_roothide_iphoneos-arm64e.deb` — rootHide tweak
-- `AppEnumGuardTester_1.0.0_sandboxed.ipa` — sandboxed verification app
+- `AppEnumGuard_1.1.0_roothide_iphoneos-arm64e.deb` — rootHide tweak
+- `AppEnumGuardTester_1.1.0_sandboxed.ipa` — sandboxed verification app
 
 ## Install and verify
 
 1. Install the rootHide `.deb` and respring.
 2. Install the tester IPA using a normal developer/sideloading signature.
-3. Ensure tweak injection is enabled for **AppEnum Test**.
+3. Leave AppEnumGuard injection disabled for **AppEnum Test**; v1.1 protects it
+   from SpringBoard.
 4. Install WhatsApp, or enter the bundle identifier of another known installed
    application.
 5. Tap **Run comparison**.
@@ -76,8 +91,9 @@ Expected results with WhatsApp installed:
 | Tweak absent | 9 | 7 | Red / FAIL |
 | Tweak active | 7 | 7 | Green / PASS |
 
-The original device test reproduced both states: uninstalling the tweak produced
-the red `9 / 7` result, while installing it produced the green `7 / 7` result.
+The device test reproduced both states with tester injection disabled:
+uninstalling the tweak produced the red `9 / 7` result, while installing v1.1
+produced the green `7 / 7` result.
 
 ## Build the tweak
 
@@ -107,8 +123,10 @@ is specifically intended to run from a normal application sandbox.
 
 - This is a user-space mitigation for the published SpringBoardServices
   primitive, not Apple's complete FrontBoard patch.
-- An application that disables tweak injection cannot be protected by a
-  client-side injected tweak.
+- Version 1.1 does not require injection into protected applications. Disabling
+  injection globally or for SpringBoard itself will disable the mitigation.
+- The server-side implementation is confirmed on iOS 17.3.1 build 21D61. The
+  package targets 17.0–17.3.1 using the same runtime-validated selector.
 - A `7 / 7` test is meaningful only when the target application is known to be
   installed.
 - The tester intentionally calls an undocumented private API and is not suitable
