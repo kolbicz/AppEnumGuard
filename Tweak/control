@@ -1,9 +1,12 @@
-Package: com.christoph.appenumerationfix
+Package: cz.kolbi.appenumguard
 Name: AppEnumGuard
-Version: 1.1.0
+Version: 1.1.1
 Architecture: iphoneos-arm64
 Description: SpringBoard-side mitigation for CVE-2025-31207 on iOS 17.0-17.3.1 with Relaxin/rootHide.
-Maintainer: Christoph
-Author: Christoph
+Maintainer: Kolbicz
+Author: Kolbicz
 Section: Tweaks
 Depends: firmware (>= 17.0), firmware (<< 17.4)
+Conflicts: com.christoph.appenumerationfix
+Replaces: com.christoph.appenumerationfix
+Provides: com.christoph.appenumerationfix

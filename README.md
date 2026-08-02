@@ -71,7 +71,7 @@ AppEnumGuard into their processes.
 
 Each GitHub release contains both installable artifacts:
 
-- `AppEnumGuard_1.1.0_roothide_iphoneos-arm64e.deb` — rootHide tweak
+- `AppEnumGuard_1.1.1_roothide_iphoneos-arm64e.deb` — rootHide tweak
 - `AppEnumGuardTester_1.1.0_sandboxed.ipa` — sandboxed verification app
 
 ## Install and verify
